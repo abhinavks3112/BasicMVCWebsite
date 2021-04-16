@@ -117,6 +117,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202104161519441_InitialCreate.cs" />
+    <Compile Include="Migrations\202104161519441_InitialCreate.designer.cs">
+      <DependentUpon>202104161519441_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104161601595_DataAnnotations.cs" />
+    <Compile Include="Migrations\202104161601595_DataAnnotations.designer.cs">
+      <DependentUpon>202104161601595_DataAnnotations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -137,6 +146,14 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202104161519441_InitialCreate.resx">
+      <DependentUpon>202104161519441_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104161601595_DataAnnotations.resx">
+      <DependentUpon>202104161601595_DataAnnotations.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

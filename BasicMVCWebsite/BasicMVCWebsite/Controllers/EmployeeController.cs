@@ -10,25 +10,14 @@ namespace BasicMVCWebsite.Controllers
 {
     public class EmployeeController : Controller
     {
-        // GET: Employee
-        public ActionResult Search(string name)
-        {
-            string content = Server.HtmlEncode(name);
-            return Content(content);
-        }
-
-        [HttpGet]
-        public string Search()
-        {
-            return "Http Get Action verb in action";
-        }
-
+        private readonly EmpDbContext dbContext = new EmpDbContext();
         public ActionResult Index()
         {
-            var emp = empList.OrderBy(e => e.Age).Select(e => e);
+            var emp = dbContext.Employees.OrderBy(e => e.Id).Select(e => e);
             return View(emp);
         }
 
+        // GET: Employee/Create
         [HttpGet]
         public ActionResult Create()
         {
@@ -40,31 +29,34 @@ namespace BasicMVCWebsite.Controllers
         {
             try
             {
-                empList.Add(employee);
+                dbContext.Employees.Add(employee);
+                dbContext.SaveChanges();
                 return RedirectToAction("Index");
             }
-            catch 
+            catch
             {
                 return View();
             }
         }
 
+        // GET: Employee/Edit/4
         [HttpGet]
         public ActionResult Edit(int id)
-        {
-            List<Employee> employeesList = GetAllEmployees();
-            var employee = employeesList.Single(emp => emp.Id == id);
+        { 
+            var employee = dbContext.Employees.Single(emp => emp.Id == id);
             return View(employee);
         }
-        
+
+        // POST: Employee/Save
         [HttpPost]
         public ActionResult Save(Employee empEdit)
         {
             try
-            { 
-                var employee = empList.Single(emp => emp.Id == empEdit.Id);
+            {
+                var employee = dbContext.Employees.Single(emp => emp.Id == empEdit.Id);
                 if (TryUpdateModel(employee))
                 {
+                    dbContext.SaveChanges();
                     return RedirectToAction("Index");
                 }
                 return View("Employee");
@@ -73,6 +65,18 @@ namespace BasicMVCWebsite.Controllers
             {
                 return View();
             }
+        }
+        // GET: Employee
+        public ActionResult Search(string name)
+        {
+            string content = Server.HtmlEncode(name);
+            return Content(content);
+        }
+
+        [HttpGet]
+        public string Search()
+        {
+            return "Http Get Action verb in action";
         }
 
         public static List<Employee> empList = new List<Employee>
